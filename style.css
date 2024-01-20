@@ -1,0 +1,123 @@
+/* Global styles */
+body, html {
+    height: 100%;
+    margin: 0;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    color: #ddd;
+    background-color: #2a2a2a;
+}
+
+#container {
+    height: 100%;
+}
+
+/* SVG styles */
+svg {
+    border: none;
+}
+
+/* Node styles */
+.node-circle {
+    fill: #f0f0f0;
+    fill-opacity: 0.2;
+    r: 0.4em;
+}
+
+.node text {
+    font-size: 16px;
+    /* fill: #f0f0f0; */
+}
+
+.node-text.highlighted {
+    font-weight: bold;
+    fill: #ff0000;
+}
+
+.node .highlighted circle {
+    stroke: #fff;
+    stroke-width: 3px;
+    fill: #888;
+}
+
+/* Link styles */
+.link {
+    stroke: #555;
+    stroke-opacity: 0.4;
+    stroke-width: 1.5;
+    fill: none;
+}
+
+.link.highlighted {
+    stroke: #888;
+    stroke-width: 3px;
+}
+
+/* Detail card styles */
+.detail-card {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    max-width: 80%;
+    margin: 0;
+    padding: 10px;
+    border: 1px solid #444;
+    border-radius: 5px;
+    background-color: rgba(51, 51, 51, 0.9);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    color: #ddd;
+}
+
+.detail-card p {
+    margin: 0 0 10px;
+}
+
+.detail-card button {
+    padding: 5px 10px;
+    border: none;
+    border-radius: 3px;
+    background-color: #555;
+    color: #ddd;
+    cursor: pointer;
+}
+
+.detail-card button:hover {
+    background-color: #777;
+}
+
+/* Detail card styles for tablets */
+@media (max-width: 768px) {
+    .detail-card {
+        position: fixed;
+        top: 20px;
+        left: 0;
+        right: 0;
+        bottom: 10px;
+        margin: 0;
+        padding: 20px;
+        border-radius: 0;
+        background-color: rgba(51, 51, 51, 0.9);
+        box-shadow: none;
+        overflow-y: auto;
+        z-index: 1;
+    }
+
+    .detail-card p {
+        margin: 0 0 20px;
+    }
+
+    .detail-card button {
+        display: block;
+        margin: 0 auto;
+    }
+}
+
+/* Detail card styles for smartphones */
+@media (max-width: 480px) {
+    .detail-card {
+        padding: 10px;
+    }
+
+    .detail-card p {
+        margin: 0 0 10px;
+    }
+}
