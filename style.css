@@ -1,123 +1,517 @@
-/* Global styles */
+/* ===================================
+   CSS Variables
+   =================================== */
+:root {
+    --primary-color: #6d7af1;
+    --secondary-color: #f16d6d;
+    --bg-color: #2a2a2a;
+    --bg-secondary: #333333;
+    --text-color: #dddddd;
+    --text-secondary: #aaaaaa;
+    --accent-color: #ff6b6b;
+    --success-color: #51cf66;
+    --border-color: #444444;
+    --shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    --shadow-lg: 0 4px 16px rgba(0, 0, 0, 0.5);
+    --transition: all 0.3s ease;
+}
+
+/* ===================================
+   Global Styles
+   =================================== */
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
 body, html {
     height: 100%;
     margin: 0;
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    color: #ddd;
-    background-color: #2a2a2a;
+    padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, 
+                 Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+    color: var(--text-color);
+    background-color: var(--bg-color);
+    overflow: hidden;
 }
 
 #container {
-    height: 100%;
+    height: calc(100% - 120px);
+    width: 100%;
+    position: relative;
 }
 
-/* SVG styles */
+/* ===================================
+   Header Styles
+   =================================== */
+.app-header {
+    background-color: var(--bg-secondary);
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: var(--shadow);
+    border-bottom: 2px solid var(--border-color);
+}
+
+.header-content h1 {
+    margin: 0;
+    font-size: 1.5rem;
+    color: var(--primary-color);
+}
+
+.subtitle {
+    margin: 0.25rem 0 0 0;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+.header-controls {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.control-btn {
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.control-btn:hover {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    transform: translateY(-2px);
+}
+
+.control-btn:active {
+    transform: translateY(0);
+}
+
+/* ===================================
+   SVG Styles
+   =================================== */
 svg {
     border: none;
+    cursor: grab;
 }
 
-/* Node styles */
+svg:active {
+    cursor: grabbing;
+}
+
+/* ===================================
+   Node Styles
+   =================================== */
 .node-circle {
     fill: #f0f0f0;
-    fill-opacity: 0.2;
-    r: 0.4em;
+    fill-opacity: 0.3;
+    stroke: #666;
+    stroke-width: 2px;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.node-circle:hover {
+    fill-opacity: 0.6;
+    stroke: var(--primary-color);
+    stroke-width: 3px;
 }
 
 .node text {
-    font-size: 16px;
-    /* fill: #f0f0f0; */
+    font-size: 14px;
+    cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;
+    transition: var(--transition);
+}
+
+.node text:hover {
+    fill: var(--accent-color);
+    font-weight: bold;
 }
 
 .node-text.highlighted {
     font-weight: bold;
-    fill: #ff0000;
+    fill: var(--accent-color);
+    text-decoration: underline;
 }
 
-.node .highlighted circle {
-    stroke: #fff;
-    stroke-width: 3px;
-    fill: #888;
-}
-
-/* Link styles */
+/* ===================================
+   Link Styles
+   =================================== */
 .link {
     stroke: #555;
     stroke-opacity: 0.4;
     stroke-width: 1.5;
     fill: none;
+    transition: var(--transition);
+}
+
+.link:hover {
+    stroke: var(--primary-color);
+    stroke-opacity: 0.8;
 }
 
 .link.highlighted {
-    stroke: #888;
+    stroke: var(--accent-color);
     stroke-width: 3px;
+    stroke-opacity: 1;
 }
 
-/* Detail card styles */
+/* ===================================
+   Detail Card Styles
+   =================================== */
 .detail-card {
     position: absolute;
-    top: 20px;
-    right: 20px;
-    max-width: 80%;
+    max-width: 500px;
+    max-height: 70vh;
     margin: 0;
-    padding: 10px;
-    border: 1px solid #444;
-    border-radius: 5px;
-    background-color: rgba(51, 51, 51, 0.9);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
-    color: #ddd;
+    padding: 1.5rem;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    background-color: rgba(51, 51, 51, 0.98);
+    box-shadow: var(--shadow-lg);
+    color: var(--text-color);
+    overflow-y: auto;
+    z-index: 1000;
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.detail-card h1 {
+    margin-top: 0;
+    color: var(--primary-color);
+    font-size: 1.5rem;
+    border-bottom: 2px solid var(--border-color);
+    padding-bottom: 0.5rem;
+}
+
+.detail-card h2 {
+    color: var(--secondary-color);
+    font-size: 1.2rem;
+    margin-top: 1.5rem;
+}
+
+.detail-card h3 {
+    color: var(--text-color);
+    font-size: 1rem;
+    margin-top: 1rem;
 }
 
 .detail-card p {
-    margin: 0 0 10px;
+    margin: 0.5rem 0;
+    line-height: 1.6;
+}
+
+.detail-card b {
+    color: var(--success-color);
 }
 
 .detail-card button {
-    padding: 5px 10px;
+    margin-top: 1rem;
+    padding: 0.6rem 1.5rem;
     border: none;
-    border-radius: 3px;
-    background-color: #555;
-    color: #ddd;
+    border-radius: 4px;
+    background-color: var(--primary-color);
+    color: white;
     cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: bold;
+    transition: var(--transition);
+    width: 100%;
 }
 
 .detail-card button:hover {
-    background-color: #777;
+    background-color: var(--accent-color);
+    transform: scale(1.02);
 }
 
-/* Detail card styles for tablets */
+.detail-card::-webkit-scrollbar {
+    width: 8px;
+}
+
+.detail-card::-webkit-scrollbar-track {
+    background: var(--bg-color);
+    border-radius: 4px;
+}
+
+.detail-card::-webkit-scrollbar-thumb {
+    background: var(--border-color);
+    border-radius: 4px;
+}
+
+.detail-card::-webkit-scrollbar-thumb:hover {
+    background: var(--primary-color);
+}
+
+/* ===================================
+   Modal Styles
+   =================================== */
+.modal {
+    position: fixed;
+    z-index: 2000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.7);
+    animation: fadeIn 0.3s ease;
+}
+
+.modal-content {
+    background-color: var(--bg-secondary);
+    margin: 5% auto;
+    padding: 2rem;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    width: 90%;
+    max-width: 600px;
+    box-shadow: var(--shadow-lg);
+    position: relative;
+}
+
+.modal-content h2 {
+    color: var(--primary-color);
+    margin-top: 0;
+}
+
+.modal-content h3 {
+    color: var(--text-color);
+    margin-top: 1.5rem;
+}
+
+.help-section {
+    margin-bottom: 1.5rem;
+}
+
+.help-section ul {
+    line-height: 1.8;
+}
+
+.close-modal {
+    color: var(--text-secondary);
+    float: right;
+    font-size: 2rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.close-modal:hover,
+.close-modal:focus {
+    color: var(--accent-color);
+}
+
+/* ===================================
+   Loading Spinner
+   =================================== */
+.loading-spinner {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    z-index: 3000;
+}
+
+.spinner {
+    border: 4px solid var(--border-color);
+    border-top: 4px solid var(--primary-color);
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 1rem;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* ===================================
+   Error Message
+   =================================== */
+.error-message {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 2rem;
+    background-color: var(--bg-secondary);
+    border: 2px solid var(--accent-color);
+    border-radius: 8px;
+    color: var(--accent-color);
+    font-size: 1.2rem;
+    text-align: center;
+    max-width: 80%;
+}
+
+/* ===================================
+   Footer Styles
+   =================================== */
+.app-footer {
+    background-color: var(--bg-secondary);
+    padding: 1rem;
+    text-align: center;
+    border-top: 1px solid var(--border-color);
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+.app-footer a {
+    color: var(--primary-color);
+    text-decoration: none;
+    transition: var(--transition);
+}
+
+.app-footer a:hover {
+    color: var(--accent-color);
+    text-decoration: underline;
+}
+
+/* ===================================
+   Responsive Design - Tablets
+   =================================== */
 @media (max-width: 768px) {
+    .app-header {
+        flex-direction: column;
+        gap: 1rem;
+        padding: 1rem;
+    }
+
+    .header-controls {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .control-btn {
+        flex: 1;
+        justify-content: center;
+    }
+
     .detail-card {
         position: fixed;
-        top: 20px;
-        left: 0;
-        right: 0;
-        bottom: 10px;
+        top: 10vh;
+        left: 5%;
+        right: 5%;
+        bottom: 10vh;
+        max-width: none;
+        max-height: none;
         margin: 0;
-        padding: 20px;
-        border-radius: 0;
-        background-color: rgba(51, 51, 51, 0.9);
-        box-shadow: none;
-        overflow-y: auto;
-        z-index: 1;
+        padding: 1.5rem;
+        border-radius: 8px;
     }
 
-    .detail-card p {
-        margin: 0 0 20px;
+    .modal-content {
+        width: 95%;
+        margin: 10% auto;
+        padding: 1.5rem;
     }
 
-    .detail-card button {
-        display: block;
-        margin: 0 auto;
+    #container {
+        height: calc(100% - 180px);
     }
 }
 
-/* Detail card styles for smartphones */
+/* ===================================
+   Responsive Design - Smartphones
+   =================================== */
 @media (max-width: 480px) {
-    .detail-card {
-        padding: 10px;
+    .header-content h1 {
+        font-size: 1.2rem;
     }
 
-    .detail-card p {
-        margin: 0 0 10px;
+    .subtitle {
+        font-size: 0.8rem;
+    }
+
+    .control-btn {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.8rem;
+    }
+
+    .node text {
+        font-size: 12px;
+    }
+
+    .detail-card {
+        padding: 1rem;
+        font-size: 0.9rem;
+    }
+
+    .detail-card h1 {
+        font-size: 1.2rem;
+    }
+
+    .detail-card h2 {
+        font-size: 1rem;
+    }
+
+    .modal-content {
+        padding: 1rem;
+    }
+}
+
+/* ===================================
+   Print Styles
+   =================================== */
+@media print {
+    .app-header,
+    .app-footer,
+    .control-btn,
+    .detail-card button {
+        display: none;
+    }
+
+    body {
+        background-color: white;
+        color: black;
+    }
+
+    #container {
+        height: auto;
+    }
+}
+
+/* ===================================
+   Accessibility
+   =================================== */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+:focus-visible {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 2px;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+    :root {
+        --border-color: #666666;
+        --text-color: #ffffff;
     }
 }

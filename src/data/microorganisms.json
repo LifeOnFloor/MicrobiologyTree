@@ -1,0 +1,33 @@
+[
+    {
+        "id": "M01",
+        "common_name": "黄色ブドウ球菌",
+        "scientific_name": "Staphylococcus aureus",
+        "class": "細菌.グラム陽性.球菌.カタラーゼ陽性.コアグラーゼ陽性",
+        "metabolism": "通性嫌気性",
+        "medium": "黄色コロニー",
+        "resistance": [
+            "メチシリン",
+            "バンコマイシン"
+        ],
+        "normal_flora": ""
+    },
+    {
+        "id": "M02",
+        "common_name": "レンサ球菌",
+        "scientific_name": "Streptococcus pyogenes",
+        "class": [
+            "細菌",
+            "グラム陽性",
+            "球菌",
+            "カタラーゼ陰性",
+            "β溶血性"
+        ],
+        "metabolism": "通性嫌気性",
+        "medium": "β溶血性コロニー",
+        "resistance": [
+            "ペニシリン"
+        ],
+        "normal_flora": ""
+    }
+]

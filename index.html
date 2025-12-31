@@ -4,21 +4,139 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>微生物</title>
+    <meta name="description" content="微生物の分類を階層構造で視覚化する、インタラクティブなWebアプリケーション">
+    <meta name="keywords" content="微生物, 細菌, 分類, 可視化, D3.js, 医学, 生物学">
+    <meta name="author" content="Your Name">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Microbiology Tree - 微生物分類の可視化">
+    <meta property="og:description" content="微生物の分類を階層構造で視覚化する、インタラクティブなWebアプリケーション">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:title" content="Microbiology Tree - 微生物分類の可視化">
+    <meta property="twitter:description" content="微生物の分類を階層構造で視覚化する、インタラクティブなWebアプリケーション">
+    
+    <title>Microbiology Tree - 微生物分類の可視化</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🦠</text></svg>">
+    
+    <!-- Stylesheets -->
     <link rel="stylesheet" href="style.css">
-    <script src="https://d3js.org/d3.v5.min.js"></script>
+    
+    <!-- D3.js v7 -->
+    <script src="https://d3js.org/d3.v7.min.js"></script>
 </head>
 
 <body>
-    <div id="container">
-        <div id="description-container">
+    <!-- Header -->
+    <header class="app-header">
+        <div class="header-content">
+            <h1>🦠 Microbiology Tree</h1>
+            <p class="subtitle">微生物分類の可視化</p>
         </div>
-        <script src="data/hierarchical_microorganisms.js"></script>
+        <div class="header-controls">
+            <button id="reset-zoom" class="control-btn" title="ズームをリセット">
+                <span>🔄</span> リセット
+            </button>
+            <button id="toggle-help" class="control-btn" title="使い方を表示">
+                <span>❓</span> ヘルプ
+            </button>
+        </div>
+    </header>
 
-        <!-- お好みの表示形式を選択してください-->
-        <script src="script_circle.js"></script>
-        <!-- <script src="script_vertical.js"></script> -->
-        <!-- <script src="script_toggle.js"></script> -->
+    <!-- Help Modal -->
+    <div id="help-modal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>使い方</h2>
+            <div class="help-section">
+                <h3>基本操作</h3>
+                <ul>
+                    <li><strong>ノードの円をクリック:</strong> 子ノードの展開/折りたたみ</li>
+                    <li><strong>テキストをクリック:</strong> 詳細情報を表示</li>
+                    <li><strong>右クリック（PC）/ 長押し（スマホ）:</strong> テキストをハイライト</li>
+                    <li><strong>マウスホイール:</strong> ズームイン/アウト</li>
+                    <li><strong>ドラッグ:</strong> グラフの移動</li>
+                </ul>
+            </div>
+            <div class="help-section">
+                <h3>表示形式</h3>
+                <p>index.htmlで読み込むJavaScriptを変更することで、3種類の表示形式を選択できます：</p>
+                <ul>
+                    <li><strong>サークル形式:</strong> script_circle.js</li>
+                    <li><strong>水平ツリー形式:</strong> script_vertical.js</li>
+                    <li><strong>折りたたみ形式:</strong> script_toggle.js</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Container -->
+    <div id="container" role="main" aria-label="微生物分類ツリー">
+        <div id="description-container" aria-live="polite"></div>
+    </div>
+
+    <!-- Loading Indicator -->
+    <div id="loading" class="loading-spinner" style="display: none;">
+        <div class="spinner"></div>
+        <p>読み込み中...</p>
+    </div>
+
+    <!-- Footer -->
+    <footer class="app-footer">
+        <p>
+            <a href="https://github.com/LifeOnFloor/microbiology-tree" target="_blank" rel="noopener noreferrer">
+                GitHub
+            </a> | 
+            <a href="LICENSE" target="_blank">MIT License</a>
+        </p>
+    </footer>
+
+    <!-- Data -->
+    <script src="src/data/hierarchical_microorganisms.js"></script>
+
+    <!-- Visualization Scripts -->
+    <!-- お好みの表示形式を選択してください（1つだけコメントを外す） -->
+    <script src="src/visualizations/script_circle.js"></script>
+    <!-- <script src="src/visualizations/script_vertical.js"></script> -->
+    <!-- <script src="src/visualizations/script_toggle.js"></script> -->
+
+    <!-- UI Scripts -->
+    <script>
+        // Help modal toggle
+        document.getElementById('toggle-help').addEventListener('click', function() {
+            const modal = document.getElementById('help-modal');
+            modal.style.display = 'block';
+        });
+
+        document.querySelector('.close-modal').addEventListener('click', function() {
+            document.getElementById('help-modal').style.display = 'none';
+        });
+
+        window.addEventListener('click', function(event) {
+            const modal = document.getElementById('help-modal');
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        });
+
+        // Reset zoom button
+        document.getElementById('reset-zoom').addEventListener('click', function() {
+            if (window.main) {
+                window.main.update(window.main.dataManagement.root);
+            }
+        });
+
+        // Error handling
+        window.addEventListener('error', function(event) {
+            console.error('アプリケーションエラー:', event.error);
+            const container = document.getElementById('container');
+            container.innerHTML = '<div class="error-message">エラーが発生しました。ページを再読み込みしてください。</div>';
+        });
+    </script>
 </body>
 
 </html>
