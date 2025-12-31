@@ -491,10 +491,10 @@ class Link {
 
 // データを読み込み、グラフを描画します
 try {
-    if (typeof BACTERIA === 'undefined') {
-        throw new Error('BACTERIAデータが定義されていません。');
+    if (typeof rawData === 'undefined') {
+        throw new Error('rawDataが定義されていません。');
     }
-    const main = new Main(BACTERIA);
+    const main = new Main(rawData);
     main.update(main.dataManagement.root);
 } catch (error) {
     console.error('アプリケーション起動エラー:', error);
