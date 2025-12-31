@@ -5,4 +5,4 @@
 
 微生物の分類を階層構造で視覚化する、インタラクティブなWebアプリケーションです。医学・生物学の学習ツールとして、微生物の分類を直感的に理解できます。
 
-[**デモを見る**](https://lifeonfloor.github.io/microbiology-tree/)
+[**デモを見る**](https://lifeonfloor.github.io/MicrobiologyTree/)
