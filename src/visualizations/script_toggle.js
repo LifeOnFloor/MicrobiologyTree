@@ -298,36 +298,127 @@ class Node {
             .attr("class", "detail-card")
             .style("visibility", "hidden");
 
+        // ヘッダーを追加
+        const header = detailCard.append("div")
+            .attr("class", "detail-card-header");
+
+        header.append("div")
+            .attr("class", "detail-card-title")
+            .text("📋 詳細情報");
+
+        header.append("div")
+            .attr("class", "detail-card-drag-hint")
+            .html("🔀 ドラッグで移動");
+
+        // コンテンツを追加
+        const content = detailCard.append("div")
+            .attr("class", "detail-card-content");
+
         if (d.data.detail?.encodeHTML) {
-            detailCard.html(d.data.detail.text || d.data.name);
+            content.html(d.data.detail.text || d.data.name);
         } else {
-            detailCard.text(d.data.detail?.text || d.data.name);
+            content.text(d.data.detail?.text || d.data.name);
         }
 
-        detailCard.append("button")
+        // 閉じるボタンを追加
+        const footer = detailCard.append("div")
+            .style("padding", "0 1.5rem 1rem");
+
+        footer.append("button")
             .text("閉じる")
             .on("click", function() {
                 detailCard.remove();
             });
 
+        // カードの位置を設定
         const cardWidth = detailCard.node().offsetWidth;
         const cardHeight = detailCard.node().offsetHeight;
         
-        let left = event.pageX + 10;
-        let top = event.pageY + 10;
-
-        if (left + cardWidth > windowWidth) {
-            left = windowWidth - cardWidth - 20;
-        }
-
-        if (top + cardHeight > windowHeight) {
-            top = windowHeight - cardHeight - 20;
-        }
+        let left = Math.min(event.pageX + 10, windowWidth - cardWidth - 20);
+        let top = Math.min(event.pageY + 10, windowHeight - cardHeight - 20);
+        left = Math.max(10, left);
+        top = Math.max(10, top);
 
         detailCard
             .style("left", left + "px")
             .style("top", top + "px")
             .style("visibility", "visible");
+
+        // ドラッグ機能を追加
+        this.makeDraggable(detailCard, header);
+    }
+
+    makeDraggable(card, handle) {
+        const cardNode = card.node();
+        let isDragging = false;
+        let currentX, currentY, initialX, initialY;
+
+        const onMouseDown = (e) => {
+            if (e.target.tagName === 'BUTTON') return;
+            isDragging = true;
+            initialX = e.clientX - cardNode.offsetLeft;
+            initialY = e.clientY - cardNode.offsetTop;
+            handle.style('cursor', 'grabbing');
+        };
+
+        const onMouseMove = (e) => {
+            if (!isDragging) return;
+            e.preventDefault();
+            
+            currentX = e.clientX - initialX;
+            currentY = e.clientY - initialY;
+
+            const maxX = window.innerWidth - cardNode.offsetWidth;
+            const maxY = window.innerHeight - cardNode.offsetHeight;
+            
+            currentX = Math.max(0, Math.min(currentX, maxX));
+            currentY = Math.max(0, Math.min(currentY, maxY));
+
+            card.style("left", currentX + "px")
+                .style("top", currentY + "px");
+        };
+
+        const onMouseUp = () => {
+            isDragging = false;
+            handle.style('cursor', 'grab');
+        };
+
+        handle.on('mousedown', onMouseDown);
+        d3.select(document).on('mousemove.drag', onMouseMove);
+        d3.select(document).on('mouseup.drag', onMouseUp);
+
+        // タッチイベント
+        handle.on('touchstart', (e) => {
+            if (e.target.tagName === 'BUTTON') return;
+            isDragging = true;
+            const touch = e.touches[0];
+            initialX = touch.clientX - cardNode.offsetLeft;
+            initialY = touch.clientY - cardNode.offsetTop;
+            handle.style('cursor', 'grabbing');
+        });
+
+        d3.select(document).on('touchmove.drag', (e) => {
+            if (!isDragging) return;
+            e.preventDefault();
+            
+            const touch = e.touches[0];
+            currentX = touch.clientX - initialX;
+            currentY = touch.clientY - initialY;
+
+            const maxX = window.innerWidth - cardNode.offsetWidth;
+            const maxY = window.innerHeight - cardNode.offsetHeight;
+            
+            currentX = Math.max(0, Math.min(currentX, maxX));
+            currentY = Math.max(0, Math.min(currentY, maxY));
+
+            card.style("left", currentX + "px")
+                .style("top", currentY + "px");
+        });
+
+        d3.select(document).on('touchend.drag', () => {
+            isDragging = false;
+            handle.style('cursor', 'grab');
+        });
     }
 }
 
