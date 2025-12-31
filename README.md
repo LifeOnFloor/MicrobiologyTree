@@ -13,6 +13,7 @@
   - サークル形式（放射状ツリー）
   - 水平ツリー形式
   - 折りたたみ可能ツリー
+  - **画面上のボタンでリアルタイム切り替え可能！**
 
 - 🖱️ **インタラクティブな操作**
   - ノードのクリックで展開/折りたたみ
@@ -24,6 +25,10 @@
   - デスクトップ、タブレット、スマートフォンに対応
   - タッチ操作サポート
 
+- 💾 **設定の保存**
+  - 選択した表示形式を自動保存
+  - 次回訪問時に前回の設定で表示
+
 - 🔬 **豊富な微生物データ**
   - グラム陽性菌・陰性菌
   - 球菌・桿菌
@@ -32,14 +37,14 @@
 
 ## 🚀 デモ
 
-[**ライブデモを見る**](https://LifeOnFloor.github.io/microbiology-tree/)
+[**ライブデモを見る**](https://your-username.github.io/microbiology-tree/)
 
 ## 📦 インストール
 
 ### 方法1: 直接使用（最も簡単）
 
 ```bash
-git clone https://github.com/LifeOnFloor/microbiology-tree.git
+git clone https://github.com/your-username/microbiology-tree.git
 cd microbiology-tree
 ```
 
@@ -58,7 +63,7 @@ npx http-server
 ### 方法2: 開発環境のセットアップ
 
 ```bash
-git clone https://github.com/LifeOnFloor/microbiology-tree.git
+git clone https://github.com/your-username/microbiology-tree.git
 cd microbiology-tree
 npm install
 npm run dev
@@ -70,27 +75,25 @@ npm run dev
 
 | 操作 | 説明 |
 |------|------|
+| **表示形式ボタン** | サークル/水平/折りたたみ形式を切り替え |
 | **ノードの円をクリック** | 子ノードの展開/折りたたみ |
 | **テキストをクリック** | 詳細情報カードを表示 |
 | **右クリック（PC）** | テキストをハイライト |
 | **長押し（スマホ）** | テキストをハイライト |
 | **マウスホイール** | ズームイン/アウト |
 | **ドラッグ** | グラフの移動 |
+| **リセットボタン** | ズームと位置をリセット |
+| **ヘルプボタン** | 使い方を表示 |
 
 ### 表示形式の切り替え
 
-`index.html`で使用するスクリプトを変更：
+画面上部の3つのボタンで表示形式を切り替えられます：
 
-```html
-<!-- サークル形式 -->
-<script src="src/visualizations/script_circle.js"></script>
+- **⭕ サークル**: 放射状のツリー表示（美しく全体像を把握）
+- **➡️ 水平**: 左から右へ展開（詳細な階層構造を確認）
+- **📋 折りたたみ**: ノードをクリックして自由に展開/折りたたみ
 
-<!-- 水平ツリー形式 -->
-<!-- <script src="src/visualizations/script_vertical.js"></script> -->
-
-<!-- 折りたたみ形式 -->
-<!-- <script src="src/visualizations/script_toggle.js"></script> -->
-```
+選択した表示形式は自動的に保存され、次回訪問時も同じ形式で表示されます。
 
 ## 📁 プロジェクト構造
 
@@ -144,7 +147,7 @@ microbiology-tree/
 
 ## 📧 お問い合わせ
 
-プロジェクトに関する質問や提案がありましたら、[Issues](https://github.com/LifeOnFloor/microbiology-tree/issues) でお知らせください。
+プロジェクトに関する質問や提案がありましたら、[Issues](https://github.com/your-username/microbiology-tree/issues) でお知らせください。
 
 ## 🔗 関連リンク
 

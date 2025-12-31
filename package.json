@@ -12,7 +12,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/LifeOnFloor/microbiology-tree.git"
+    "url": "git+https://github.com/your-username/microbiology-tree.git"
   },
   "keywords": [
     "microbiology",
@@ -27,9 +27,9 @@
   "author": "Your Name",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/LifeOnFloor/microbiology-tree/issues"
+    "url": "https://github.com/your-username/microbiology-tree/issues"
   },
-  "homepage": "https://github.com/LifeOnFloor/microbiology-tree#readme",
+  "homepage": "https://github.com/your-username/microbiology-tree#readme",
   "devDependencies": {
     "eslint": "^8.56.0",
     "gh-pages": "^6.1.1",

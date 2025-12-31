@@ -101,7 +101,7 @@ git init
 git add .
 git commit -m "Initial commit: GitHub公開用に改善"
 git branch -M main
-git remote add origin https://github.com/LifeOnFloor/microbiology-tree.git
+git remote add origin https://github.com/your-username/microbiology-tree.git
 git push -u origin main
 ```
 
@@ -115,9 +115,9 @@ git push -u origin main
 
 以下のファイルを編集して、自分の情報に更新:
 
-- `README.md`: `LifeOnFloor` を置き換え
+- `README.md`: `your-username` を置き換え
 - `package.json`: `author` を更新
-- `LICENSE`: `LifeOnFloor` を更新
+- `LICENSE`: `[Your Name]` を更新
 - `index.html`: meta情報を更新
 
 ### 4. データを追加
@@ -191,7 +191,7 @@ git push -u origin main
 
 質問や問題がありましたら:
 
-1. [Issues](https://github.com/LifeOnFloor/microbiology-tree/issues) をチェック
+1. [Issues](https://github.com/your-username/microbiology-tree/issues) をチェック
 2. 新しいissueを作成
 3. コミュニティに質問
 
@@ -199,8 +199,8 @@ git push -u origin main
 
 ## ✅ 公開前の最終チェックリスト
 
-- [ ] `LifeOnFloor` を全て置き換え
-- [ ] `LifeOnFloor` を置き換え
+- [ ] `your-username` を全て置き換え
+- [ ] `[Your Name]` を置き換え
 - [ ] スクリーンショットを追加
 - [ ] データを完成させる（オプション）
 - [ ] ローカルでテスト

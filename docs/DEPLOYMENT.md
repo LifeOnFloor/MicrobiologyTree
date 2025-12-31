@@ -36,8 +36,8 @@ git add .
 # 初回コミット
 git commit -m "Initial commit: Microbiology Tree visualization tool"
 
-# リモートリポジトリを追加（LifeOnFloorを自分のGitHubユーザー名に置き換え）
-git remote add origin https://github.com/LifeOnFloor/microbiology-tree.git
+# リモートリポジトリを追加（your-usernameを自分のGitHubユーザー名に置き換え）
+git remote add origin https://github.com/your-username/microbiology-tree.git
 
 # メインブランチにプッシュ
 git branch -M main
@@ -54,7 +54,7 @@ git push -u origin main
    - **Branch**: `main`
    - **Folder**: `/ (root)`
 4. 「Save」をクリック
-5. 数分後、`https://LifeOnFloor.github.io/microbiology-tree/` でアクセス可能
+5. 数分後、`https://your-username.github.io/microbiology-tree/` でアクセス可能
 
 ### 方法2: GitHub Actions（自動デプロイ）
 
@@ -65,8 +65,8 @@ main ブランチにプッシュすると自動的にデプロイされます。
 
 公開後、以下の箇所を更新してください:
 
-1. **LifeOnFloor** を自分のGitHubユーザー名に置き換え
-2. **LifeOnFloor** を自分の名前に置き換え（LICENSE, package.json, index.htmlなど）
+1. **your-username** を自分のGitHubユーザー名に置き換え
+2. **[Your Name]** を自分の名前に置き換え（LICENSE, package.json, index.htmlなど）
 3. デモのスクリーンショットを追加:
    ```bash
    # スクリーンショットを撮影し、docs/imagesに保存
@@ -141,7 +141,7 @@ git push origin v1.0.0
 
 問題が発生した場合:
 
-1. [Issues](https://github.com/LifeOnFloor/microbiology-tree/issues) で既存の問題を検索
+1. [Issues](https://github.com/your-username/microbiology-tree/issues) で既存の問題を検索
 2. 新しいissueを作成
 3. できるだけ詳細な情報を提供（エラーメッセージ、スクリーンショットなど）
 

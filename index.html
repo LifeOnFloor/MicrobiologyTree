@@ -38,6 +38,18 @@
             <p class="subtitle">微生物分類の可視化</p>
         </div>
         <div class="header-controls">
+            <!-- 表示形式切り替えボタン -->
+            <div class="view-selector">
+                <button id="view-circle" class="view-btn active" data-view="circle" title="サークル形式">
+                    <span>⭕</span> サークル
+                </button>
+                <button id="view-vertical" class="view-btn" data-view="vertical" title="水平ツリー形式">
+                    <span>➡️</span> 水平
+                </button>
+                <button id="view-toggle" class="view-btn" data-view="toggle" title="折りたたみ形式">
+                    <span>📋</span> 折りたたみ
+                </button>
+            </div>
             <button id="reset-zoom" class="control-btn" title="ズームをリセット">
                 <span>🔄</span> リセット
             </button>
@@ -64,12 +76,13 @@
             </div>
             <div class="help-section">
                 <h3>表示形式</h3>
-                <p>index.htmlで読み込むJavaScriptを変更することで、3種類の表示形式を選択できます：</p>
+                <p>画面上部のボタンで3種類の表示形式を切り替えられます：</p>
                 <ul>
-                    <li><strong>サークル形式:</strong> script_circle.js</li>
-                    <li><strong>水平ツリー形式:</strong> script_vertical.js</li>
-                    <li><strong>折りたたみ形式:</strong> script_toggle.js</li>
+                    <li><strong>⭕ サークル形式:</strong> 放射状のツリー表示</li>
+                    <li><strong>➡️ 水平形式:</strong> 左から右へ展開するツリー</li>
+                    <li><strong>📋 折りたたみ形式:</strong> ノードをクリックして展開/折りたたみ</li>
                 </ul>
+                <p>選択した表示形式は自動的に保存されます。</p>
             </div>
         </div>
     </div>
@@ -88,7 +101,7 @@
     <!-- Footer -->
     <footer class="app-footer">
         <p>
-            <a href="https://github.com/LifeOnFloor/microbiology-tree" target="_blank" rel="noopener noreferrer">
+            <a href="https://github.com/your-username/microbiology-tree" target="_blank" rel="noopener noreferrer">
                 GitHub
             </a> | 
             <a href="LICENSE" target="_blank">MIT License</a>
@@ -98,11 +111,109 @@
     <!-- Data -->
     <script src="src/data/hierarchical_microorganisms.js"></script>
 
-    <!-- Visualization Scripts -->
-    <!-- お好みの表示形式を選択してください（1つだけコメントを外す） -->
-    <script src="src/visualizations/script_circle.js"></script>
-    <!-- <script src="src/visualizations/script_vertical.js"></script> -->
-    <!-- <script src="src/visualizations/script_toggle.js"></script> -->
+    <!-- Visualization Scripts - 動的に読み込まれます -->
+    
+    <!-- View Switcher Script -->
+    <script>
+        // ビューの切り替え管理
+        class ViewSwitcher {
+            constructor() {
+                this.currentView = localStorage.getItem('preferredView') || 'circle';
+                this.currentScript = null;
+                this.views = {
+                    circle: 'src/visualizations/script_circle.js',
+                    vertical: 'src/visualizations/script_vertical.js',
+                    toggle: 'src/visualizations/script_toggle.js'
+                };
+                this.init();
+            }
+
+            init() {
+                // ボタンのイベントリスナーを設定
+                document.querySelectorAll('.view-btn').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const view = e.currentTarget.dataset.view;
+                        this.switchView(view);
+                    });
+                });
+
+                // 初期ビューを読み込む
+                this.loadView(this.currentView);
+                this.updateActiveButton();
+            }
+
+            switchView(view) {
+                if (view === this.currentView) return;
+                
+                this.currentView = view;
+                localStorage.setItem('preferredView', view);
+                
+                // コンテナをクリア
+                this.clearVisualization();
+                
+                // 新しいビューを読み込む
+                this.loadView(view);
+                this.updateActiveButton();
+            }
+
+            clearVisualization() {
+                // SVGとコンテナをクリア
+                const container = document.getElementById('container');
+                const descContainer = document.getElementById('description-container');
+                
+                // SVGを削除
+                const svg = container.querySelector('svg');
+                if (svg) {
+                    svg.remove();
+                }
+                
+                // 詳細カードを削除
+                const detailCards = descContainer.querySelectorAll('.detail-card');
+                detailCards.forEach(card => card.remove());
+
+                // グローバル変数をクリア
+                if (window.main) {
+                    window.main = null;
+                }
+            }
+
+            loadView(view) {
+                // 既存のスクリプトを削除
+                if (this.currentScript) {
+                    this.currentScript.remove();
+                }
+
+                // 新しいスクリプトを作成して読み込む
+                const script = document.createElement('script');
+                script.src = this.views[view];
+                script.async = false;
+                
+                script.onerror = () => {
+                    console.error(`Failed to load ${view} view`);
+                    const container = document.getElementById('container');
+                    container.innerHTML = '<div class="error-message">ビューの読み込みに失敗しました。ページを再読み込みしてください。</div>';
+                };
+
+                document.body.appendChild(script);
+                this.currentScript = script;
+            }
+
+            updateActiveButton() {
+                document.querySelectorAll('.view-btn').forEach(btn => {
+                    if (btn.dataset.view === this.currentView) {
+                        btn.classList.add('active');
+                    } else {
+                        btn.classList.remove('active');
+                    }
+                });
+            }
+        }
+
+        // DOMが読み込まれたら初期化
+        document.addEventListener('DOMContentLoaded', () => {
+            window.viewSwitcher = new ViewSwitcher();
+        });
+    </script>
 
     <!-- UI Scripts -->
     <script>
